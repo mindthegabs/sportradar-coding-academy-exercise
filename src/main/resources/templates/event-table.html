@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Calendar</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+  td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  #table-div{
+    display: grid;
+  }
+  #addButton{
+    justify-self: center;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="table-div" th:if="${ not#lists.isEmpty(events)}">
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Sport</th>
+      <th>Description</th>
+      <th>Competitor 1</th>
+      <th>Competitor 2</th>
+      <th>Venue</th>
+      <th></th>
+    </tr>
+
+    <tr th:each="e : ${events}">
+      <td th:text="${(#temporals.dayOfWeekNameShort(e.getStartDateTime))+ ', ' + (#temporals.format(e.getStartDateTime(), 'dd-MM-yyyy')) }"></td>
+      <td th:text="${#temporals.format(e.getStartDateTime(), 'HH:mm')}"></td>
+      <td th:text="${e.sportName}"></td>
+      <td th:text="${e.description}"></td>
+      <td th:text="${e.competitor1Name}"></td>
+      <td th:text="${e.competitor2Name}"></td>
+      <td th:text="${e.venueName}"></td>
+      <td> <button type="button">Show Details</button></td>
+
+    </tr>
+
+  </table>
+  <form id=addButton action="#" th:action="@{/events/add}" method="get">
+    <button type="submit" >Add new event</button>
+  </form>
+</div>
+
+
+</body>
+</html>
